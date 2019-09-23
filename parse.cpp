@@ -78,3 +78,16 @@ void Parse::refresh()
 	inputRedirect = NULL;
 	outputRedirect = NULL;
 }
+
+void execute() 
+{
+
+	if (inputRedirect != NULL) {
+		freopen(inputRedirect, "r", stdin);
+	}
+	if (outputRedirect != NULL)
+	{
+		freopen(outputRedirect, "w+", stdout);
+	}
+	execvp(argumentVector[0], argumentVector);
+}
