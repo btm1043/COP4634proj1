@@ -21,6 +21,7 @@ class Parse
 		void parseInput(char *buf);
 		void printParams();
 		void refresh();
+		void execute();
 		
 	private:
 		char* inputRedirect;           /* file name or NULL */
