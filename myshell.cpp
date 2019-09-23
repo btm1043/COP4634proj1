@@ -16,15 +16,31 @@ int main(int argc, const char* argv[])
 		fgets(buf, 256, stdin);
 
 		p.parseInput(buf);
-		if (argc > 1)
-		{
-			if (strcmp(debug, argv[1]) == 0)
-			{
-				p.printParams();
+		
+		if (p.getFirstArg() != 1) {
+			pid = fork();
+			if (pid == 0) {
+				p.execute();
+				exit(1);
 			}
+			else {
+				if (p.getBackground() != 1)
+				{
+					result = waitpid(pid, &status, 0);
+				}
+			}
+			if (argc > 1)
+			{
+				if (strcmp(debug, argv[1]) == 0)
+				{
+					p.printParams();
+				}
+			}
+			//reassign the input and output back to NULL
+			p.refresh();
+		}else{
+			while ((pid = wait(&status)) > 0);
 		}
-		//reassign the input and output back to NULL
-		p.refresh();		
 	}
 }
 
